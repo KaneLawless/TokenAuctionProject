@@ -20,15 +20,18 @@ contract("Token Test", async (accounts) => {
         //let balance = await instance.balanceOf(accounts[0]);
         //assert.equal(balance.valueOf(), initialSupply.valueOf(), "The balance was not equal");
         // Alternatively we can use the below expect, using chai
-        return expect(instance.balanceOf(deployerAccount)).to.eventually.be.a.bignumber.equal(totalSupply);
+        return expect(instance.balanceOf(
+            deployerAccount)).to.eventually.be.a.bignumber.equal(totalSupply);
     })
 
     it("Is not possible to send more tokens than the total supply", async () => {
         let instance = this.myToken;
         let balanceOfDeployer = await instance.balanceOf(deployerAccount);
 
-        await expect(instance.transfer(anotherAccount, new BN(balanceOfDeployer+1))).to.eventually.be.rejected;
-        return await expect(instance.balanceOf(deployerAccount)).to.eventually.be.a.bignumber.equal(balanceOfDeployer);
+        await expect(instance.transfer(
+            anotherAccount, new BN(balanceOfDeployer+1))).to.eventually.be.rejected;
+        return await expect(instance.balanceOf(
+            deployerAccount)).to.eventually.be.a.bignumber.equal(balanceOfDeployer);
 
     })
 
@@ -38,8 +41,10 @@ contract("Token Test", async (accounts) => {
         let totalSupply = await instance.totalSupply();
         await expect(instance.balanceOf(deployerAccount)).to.eventually.be.a.bignumber.equal(totalSupply);
         await expect(instance.transfer(recipient, sendTokens)).to.eventually.be.fulfilled;
-        await expect(instance.balanceOf(deployerAccount)).to.eventually.be.a.bignumber.equal(totalSupply.sub(new BN(sendTokens)));
-        return await expect(instance.balanceOf(recipient)).to.eventually.be.a.bignumber.equal(new BN(sendTokens));
+        await expect(instance.balanceOf(
+            deployerAccount)).to.eventually.be.a.bignumber.equal(totalSupply.sub(new BN(sendTokens)));
+        return await expect(instance.balanceOf(
+            recipient)).to.eventually.be.a.bignumber.equal(new BN(sendTokens));
     });
 
 });
